@@ -1,4 +1,4 @@
-package agh.edu.pl.gmiejski.uniforms;
+package agh.edu.pl.gmiejski.x002_uniforms;
 
 import agh.edu.pl.gmiejski.utils.ShaderLoader;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -29,8 +29,8 @@ public class UniformedTriangle extends ApplicationAdapter {
     @Override
     public void create() {
 
-        scalingShaderProgram = ShaderLoader.createShader("core\\assets\\uniforms\\uniformedTriangle\\scalingVertex.glsl", "core\\assets\\uniforms\\uniformedTriangle\\scalingFragment.glsl");
-        translatedShaderProgram = ShaderLoader.createShader("core\\assets\\uniforms\\uniformedTriangle\\translatedVertex.glsl", "core\\assets\\uniforms\\uniformedTriangle\\translatedFragment.glsl");
+        scalingShaderProgram = ShaderLoader.createShader("core\\assets\\002_uniforms\\uniformedTriangle\\scalingVertex.glsl", "core\\assets\\002_uniforms\\uniformedTriangle\\scalingFragment.glsl");
+        translatedShaderProgram = ShaderLoader.createShader("core\\assets\\002_uniforms\\uniformedTriangle\\translatedVertex.glsl", "core\\assets\\002_uniforms\\uniformedTriangle\\translatedFragment.glsl");
         u_scale = 0.0f;
 
         scalingMesh = new Mesh(true, 60, 0, new VertexAttribute(VertexAttributes.Usage.Position, 2, ShaderProgram.POSITION_ATTRIBUTE));

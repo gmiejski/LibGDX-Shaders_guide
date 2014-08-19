@@ -1,4 +1,4 @@
-package agh.edu.pl.gmiejski.triangles;
+package agh.edu.pl.gmiejski.x001_triangles;
 
 import agh.edu.pl.gmiejski.utils.ShaderLoader;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -19,7 +19,7 @@ public class DottedTriangle extends ApplicationAdapter {
     @Override
     public void create() {
 
-        shaderProgram = ShaderLoader.createShader("core\\assets\\triangles\\dottedTriangle\\vertex.glsl", "core\\assets\\triangles\\dottedTriangle\\fragment.glsl");
+        shaderProgram = ShaderLoader.createShader("core\\assets\\001_triangles\\dottedTriangle\\vertex.glsl", "core\\assets\\001_triangles\\dottedTriangle\\fragment.glsl");
 
         mesh = new Mesh(true, 10, 0, new VertexAttribute(VertexAttributes.Usage.Position, 2, ShaderProgram.POSITION_ATTRIBUTE));
 

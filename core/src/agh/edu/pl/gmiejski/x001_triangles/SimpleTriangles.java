@@ -1,11 +1,10 @@
-package agh.edu.pl.gmiejski.triangles;
+package agh.edu.pl.gmiejski.x001_triangles;
 
 import agh.edu.pl.gmiejski.utils.ShaderLoader;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 
 /**
  * Created by Grzegorz Miejski on 8/17/2014.
@@ -20,7 +19,7 @@ public class SimpleTriangles extends ApplicationAdapter {
     @Override
     public void create() {
 
-        shaderProgram = ShaderLoader.createShader("core\\assets\\triangles\\simpleTriangles\\vertex.glsl", "core\\assets\\triangles\\simpleTriangles\\fragment.glsl");
+        shaderProgram = ShaderLoader.createShader("core\\assets\\001_triangles\\simpleTriangles\\vertex.glsl", "core\\assets\\001_triangles\\simpleTriangles\\fragment.glsl");
 
         mesh = new Mesh(true, 60, 6, new VertexAttribute(VertexAttributes.Usage.Position, 2, ShaderProgram.POSITION_ATTRIBUTE),
                 new VertexAttribute(VertexAttributes.Usage.Color, 4, ShaderProgram.COLOR_ATTRIBUTE));

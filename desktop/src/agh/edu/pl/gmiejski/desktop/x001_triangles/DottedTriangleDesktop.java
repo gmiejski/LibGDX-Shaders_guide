@@ -1,6 +1,6 @@
-package agh.edu.pl.gmiejski.desktop.triangles;
+package agh.edu.pl.gmiejski.desktop.x001_triangles;
 
-import agh.edu.pl.gmiejski.triangles.DottedTriangle;
+import agh.edu.pl.gmiejski.x001_triangles.DottedTriangle;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 

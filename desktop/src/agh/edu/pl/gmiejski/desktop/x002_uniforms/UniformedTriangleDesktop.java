@@ -1,6 +1,6 @@
-package agh.edu.pl.gmiejski.desktop.uniforms;
+package agh.edu.pl.gmiejski.desktop.x002_uniforms;
 
-import agh.edu.pl.gmiejski.uniforms.UniformedTriangle;
+import agh.edu.pl.gmiejski.x002_uniforms.UniformedTriangle;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
