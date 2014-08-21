@@ -18,7 +18,6 @@ import static java.util.stream.Collectors.toList;
  */
 public class SquareBilardWithCamera extends ApplicationAdapter {
 
-
     public static float WIDTH = 500f;
     public static float HEIGHT = 500f;
 

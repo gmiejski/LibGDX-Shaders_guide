@@ -3,16 +3,14 @@ package agh.edu.pl.gmiejski.x003_squareBilard;
 import agh.edu.pl.gmiejski.utils.ShaderLoader;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Mesh;
-import com.badlogic.gdx.graphics.VertexAttribute;
-import com.badlogic.gdx.graphics.VertexAttributes;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import static java.util.stream.Collectors.toList;
 
@@ -21,24 +19,30 @@ import static java.util.stream.Collectors.toList;
  */
 public class SquareBilard extends ApplicationAdapter {
 
-
+    public static final float COLOR_CHANGE_EACH_FRAME = 0.05f;
     private Mesh translatedMesh;
     private ShaderProgram translatedShaderProgram;
 
     private float xPos, yPos;
-    private Vector2 speed = new Vector2(0.05f, 0.05f);
-    private float edgesize = 0.2f;
 
-    Vector2 leftBot = new Vector2(-edgesize, -edgesize);
-    Vector2 rightTop = new Vector2(edgesize, edgesize);
+    private Vector2 speed = new Vector2(0.06f, -0.03f);
 
+    Vector2 leftBot;
+    Vector2 rightTop;
+
+    Color currentColor = Color.WHITE;
+    Random colorDensityRandomizer = new Random();
 
     @Override
     public void create() {
+        xPos = 0.05f;
+        yPos = -0.03f;
+
         translatedShaderProgram = ShaderLoader.createShader("core\\assets\\003_squareBilard\\withoutCamera\\vertex.glsl", "core\\assets\\003_squareBilard\\withoutCamera\\fragment.glsl");
 
         translatedMesh = new Mesh(true, 60, 0, new VertexAttribute(VertexAttributes.Usage.Position, 2, ShaderProgram.POSITION_ATTRIBUTE));
 
+        float edgesize = 0.2f;
         Vector2 v1 = new Vector2(edgesize, -edgesize);
         Vector2 v2 = new Vector2(-edgesize, -edgesize * 2);
         Vector2 v3 = new Vector2(edgesize, edgesize / 2);
@@ -52,12 +56,19 @@ public class SquareBilard extends ApplicationAdapter {
     public void render() {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        updateColor();
+
         Matrix4 translationMatrix = calculateNewTranslationMatrix();
 
         translatedShaderProgram.begin();
+        translatedShaderProgram.setUniformf("u_colorFlash", currentColor);
         translatedShaderProgram.setUniformMatrix("u_moveMatrix", translationMatrix);
         translatedMesh.render(translatedShaderProgram, GL20.GL_TRIANGLES, 0, 3);
         translatedShaderProgram.end();
+    }
+
+    private void updateColor() {
+        currentColor.add(COLOR_CHANGE_EACH_FRAME, COLOR_CHANGE_EACH_FRAME, COLOR_CHANGE_EACH_FRAME, 0);
     }
 
     private Matrix4 calculateNewTranslationMatrix() {
@@ -65,9 +76,11 @@ public class SquareBilard extends ApplicationAdapter {
         yPos += speed.y;
         if (xPos < (-1 - leftBot.x) || xPos > (1 - rightTop.x)) {
             speed.x = -speed.x;
+            currentColor = randomColor();
         }
         if (yPos < (-1 - leftBot.y) || yPos > (1 - rightTop.y)) {
             speed.y = -speed.y;
+            currentColor = randomColor();
         }
 
         return new Matrix4(new float[]{
@@ -75,6 +88,10 @@ public class SquareBilard extends ApplicationAdapter {
                 0f, 1f, 0f, 0f,
                 0f, 0f, 1f, 0f,
                 xPos, yPos, 0f, 1f});
+    }
+
+    private Color randomColor() {
+        return new Color(colorDensityRandomizer.nextFloat(), colorDensityRandomizer.nextFloat(), colorDensityRandomizer.nextFloat(), 1);
     }
 
     private void saveEdgeVectors(Vector2... vectorsArray) {

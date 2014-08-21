@@ -12,7 +12,6 @@ import com.badlogic.gdx.math.Matrix4;
  */
 public class UniformedTriangle extends ApplicationAdapter {
 
-
     private static final float MIN_SCALE = 0.05f;
     private static final float MAX_SCALE = 1f;
     private Mesh scalingMesh;
@@ -63,8 +62,6 @@ public class UniformedTriangle extends ApplicationAdapter {
         translatedShaderProgram.setUniformMatrix("u_moveMatrix", moveMatrix);
         translatedMesh.render(translatedShaderProgram, GL20.GL_TRIANGLES, 0, 3);
         translatedShaderProgram.end();
-
-
     }
 
     private Matrix4 calculateNewMoveMatrix() {
