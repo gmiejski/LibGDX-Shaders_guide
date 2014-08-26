@@ -1,21 +1,21 @@
-package agh.edu.pl.gmiejski.desktop.x003_squareBilard;
+package agh.edu.pl.gmiejski.desktop.x005_pyramid;
 
-import agh.edu.pl.gmiejski.x003_squareBilard.SquareBilard;
+import agh.edu.pl.gmiejski.x005_pyramid.Pyramid;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 /**
- * Created by Grzegorz Miejski on 8/21/2014.
+ * Created by Grzegorz Miejski on 8/25/2014.
  */
-public class SquareBilardDesktop {
+public class PyramidDesktop {
 
     public static void main(String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        config.height = 500;
-        config.width = 500;
+//        config.height = 500;
+//        config.width = 500;
         config.x = 0;
         config.y = 0;
-        new LwjglApplication(new SquareBilard(), config);
+        new LwjglApplication(new Pyramid(), config);
     }
 
 }

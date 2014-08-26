@@ -5,7 +5,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 /**
- * Created by Grzegorz Miejski on 8/19/2014.
+ * Created by Grzegorz Miejski on 8/22/2014.
  */
 public class InputAndRotationDesktop {
 

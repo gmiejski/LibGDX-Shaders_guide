@@ -21,12 +21,12 @@ import static java.lang.Math.sin;
 import static java.util.stream.Collectors.toList;
 
 /**
- * Created by Grzegorz Miejski on 8/19/2014.
+ * Created by Grzegorz Miejski on 8/22/2014.
  */
 public class InputAndRotation extends ApplicationAdapter {
     private static final double ROT_SPEED = 0.01f;
 
-    private Mesh translatedMesh;
+    private Mesh mesh;
     private ShaderProgram shaderProgram;
 
     private float xPos, yPos;
@@ -41,7 +41,7 @@ public class InputAndRotation extends ApplicationAdapter {
     public void create() {
 
         shaderProgram = ShaderLoader.createShader("core\\assets\\004_inputAndRotation\\vertex.glsl", "core\\assets\\004_inputAndRotation\\fragment.glsl");
-        translatedMesh = new Mesh(true, 60, 0, new VertexAttribute(VertexAttributes.Usage.Position, 2, ShaderProgram.POSITION_ATTRIBUTE));
+        mesh = new Mesh(true, 60, 0, new VertexAttribute(VertexAttributes.Usage.Position, 2, ShaderProgram.POSITION_ATTRIBUTE));
 
         Vector2 v1 = new Vector2(0, 0);
         Vector2 v2 = new Vector2(0.3f, 0);
@@ -49,7 +49,7 @@ public class InputAndRotation extends ApplicationAdapter {
 
         saveEdgeVectors(v1, v2, v3);
 
-        translatedMesh.setVertices(new float[]{v2.x, v2.y, v1.x, v1.y, v3.x, v3.y});
+        mesh.setVertices(new float[]{v2.x, v2.y, v1.x, v1.y, v3.x, v3.y});
     }
 
     @Override
@@ -68,7 +68,7 @@ public class InputAndRotation extends ApplicationAdapter {
         shaderProgram.begin();
         shaderProgram.setUniformMatrix("u_moveMatrix", translationMatrix);
         shaderProgram.setUniformMatrix("u_rotationMatrix", rotationMatrix);
-        translatedMesh.render(shaderProgram, GL20.GL_TRIANGLES, 0, 3);
+        mesh.render(shaderProgram, GL20.GL_TRIANGLES, 0, 3);
         shaderProgram.end();
     }
 

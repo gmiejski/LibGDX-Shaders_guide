@@ -15,13 +15,13 @@ import java.util.Random;
 import static java.util.stream.Collectors.toList;
 
 /**
- * Created by Grzegorz Miejski on 8/19/2014.
+ * Created by Grzegorz Miejski on 8/21/2014.
  */
 public class SquareBilard extends ApplicationAdapter {
 
     public static final float COLOR_CHANGE_EACH_FRAME = 0.05f;
-    private Mesh translatedMesh;
-    private ShaderProgram translatedShaderProgram;
+    private Mesh mesh;
+    private ShaderProgram shaderProgram;
 
     private float xPos, yPos;
 
@@ -38,9 +38,9 @@ public class SquareBilard extends ApplicationAdapter {
         xPos = 0.05f;
         yPos = -0.03f;
 
-        translatedShaderProgram = ShaderLoader.createShader("core\\assets\\003_squareBilard\\withoutCamera\\vertex.glsl", "core\\assets\\003_squareBilard\\withoutCamera\\fragment.glsl");
+        shaderProgram = ShaderLoader.createShader("core\\assets\\003_squareBilard\\withoutCamera\\vertex.glsl", "core\\assets\\003_squareBilard\\withoutCamera\\fragment.glsl");
 
-        translatedMesh = new Mesh(true, 60, 0, new VertexAttribute(VertexAttributes.Usage.Position, 2, ShaderProgram.POSITION_ATTRIBUTE));
+        mesh = new Mesh(true, 60, 0, new VertexAttribute(VertexAttributes.Usage.Position, 2, ShaderProgram.POSITION_ATTRIBUTE));
 
         float edgesize = 0.2f;
         Vector2 v1 = new Vector2(edgesize, -edgesize);
@@ -49,7 +49,7 @@ public class SquareBilard extends ApplicationAdapter {
 
         saveEdgeVectors(v1, v2, v3);
 
-        translatedMesh.setVertices(new float[]{v2.x, v2.y, v1.x, v1.y, v3.x, v3.y});
+        mesh.setVertices(new float[]{v2.x, v2.y, v1.x, v1.y, v3.x, v3.y});
     }
 
     @Override
@@ -60,11 +60,11 @@ public class SquareBilard extends ApplicationAdapter {
 
         Matrix4 translationMatrix = calculateNewTranslationMatrix();
 
-        translatedShaderProgram.begin();
-        translatedShaderProgram.setUniformf("u_colorFlash", currentColor);
-        translatedShaderProgram.setUniformMatrix("u_moveMatrix", translationMatrix);
-        translatedMesh.render(translatedShaderProgram, GL20.GL_TRIANGLES, 0, 3);
-        translatedShaderProgram.end();
+        shaderProgram.begin();
+        shaderProgram.setUniformf("u_colorFlash", currentColor);
+        shaderProgram.setUniformMatrix("u_moveMatrix", translationMatrix);
+        mesh.render(shaderProgram, GL20.GL_TRIANGLES, 0, 3);
+        shaderProgram.end();
     }
 
     private void updateColor() {

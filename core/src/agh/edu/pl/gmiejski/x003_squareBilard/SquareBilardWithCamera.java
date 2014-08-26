@@ -21,8 +21,8 @@ public class SquareBilardWithCamera extends ApplicationAdapter {
     public static float WIDTH = 500f;
     public static float HEIGHT = 500f;
 
-    private Mesh translatedMesh;
-    private ShaderProgram translatedShaderProgram;
+    private Mesh mesh;
+    private ShaderProgram shaderProgram;
 
     private OrthographicCamera cam;
     private float xPos, yPos;
@@ -33,9 +33,9 @@ public class SquareBilardWithCamera extends ApplicationAdapter {
 
     @Override
     public void create() {
-        translatedShaderProgram = ShaderLoader.createShader("core\\assets\\003_squareBilard\\withCamera\\vertex.glsl", "core\\assets\\003_squareBilard\\withCamera\\fragment.glsl");
+        shaderProgram = ShaderLoader.createShader("core\\assets\\003_squareBilard\\withCamera\\vertex.glsl", "core\\assets\\003_squareBilard\\withCamera\\fragment.glsl");
 
-        translatedMesh = new Mesh(true, 60, 0, new VertexAttribute(VertexAttributes.Usage.Position, 2, ShaderProgram.POSITION_ATTRIBUTE));
+        mesh = new Mesh(true, 60, 0, new VertexAttribute(VertexAttributes.Usage.Position, 2, ShaderProgram.POSITION_ATTRIBUTE));
 
         Vector2 v1 = new Vector2(100f, 250f);
         Vector2 v2 = new Vector2(250f, 300f);
@@ -43,7 +43,7 @@ public class SquareBilardWithCamera extends ApplicationAdapter {
 
         saveEdgeVectors(v1, v2, v3);
 
-        translatedMesh.setVertices(new float[]{v2.x, v2.y, v1.x, v1.y, v3.x, v3.y});
+        mesh.setVertices(new float[]{v2.x, v2.y, v1.x, v1.y, v3.x, v3.y});
 
         cam = new OrthographicCamera();
         cam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -55,11 +55,11 @@ public class SquareBilardWithCamera extends ApplicationAdapter {
 
         Matrix4 translationMatrix = calculateNewTranslationMatrix();
 
-        translatedShaderProgram.begin();
-        translatedShaderProgram.setUniformMatrix("u_projTrans", cam.combined);
-        translatedShaderProgram.setUniformMatrix("u_moveMatrix", translationMatrix);
-        translatedMesh.render(translatedShaderProgram, GL20.GL_TRIANGLES, 0, 3);
-        translatedShaderProgram.end();
+        shaderProgram.begin();
+        shaderProgram.setUniformMatrix("u_projTrans", cam.combined);
+        shaderProgram.setUniformMatrix("u_moveMatrix", translationMatrix);
+        mesh.render(shaderProgram, GL20.GL_TRIANGLES, 0, 3);
+        shaderProgram.end();
     }
 
     /**
