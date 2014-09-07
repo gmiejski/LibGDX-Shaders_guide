@@ -2,13 +2,13 @@ package agh.edu.pl.gmiejski.x006_model;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.assets.loaders.ModelLoader;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.Renderable;
-import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
@@ -21,10 +21,10 @@ import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
  * @author Grzegorz Miejski
  *         on 2014-09-07.
  */
-public class ShipModelApplication implements ApplicationListener {
+public class ShipModelApplication extends InputAdapter implements ApplicationListener {
     public PerspectiveCamera cam;
     public CameraInputController camController;
-    public Shader shader;
+    public ShipShader ship;
     public RenderContext renderContext;
     public Model model;
     public Environment environment;
@@ -37,7 +37,7 @@ public class ShipModelApplication implements ApplicationListener {
         environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
 
         cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        cam.position.set(2f, 2f, 2f);
+        cam.position.set(0f, 0f, 10f);
         cam.lookAt(0, 0, 0);
         cam.near = 1f;
         cam.far = 300f;
@@ -57,8 +57,8 @@ public class ShipModelApplication implements ApplicationListener {
         renderable.worldTransform.idt();
 
         renderContext = new RenderContext(new DefaultTextureBinder(DefaultTextureBinder.WEIGHTED, 1));
-        shader = new ShipShader();
-        shader.init();
+        ship = new ShipShader();
+        ship.init();
     }
 
     @Override
@@ -68,16 +68,17 @@ public class ShipModelApplication implements ApplicationListener {
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
+
         renderContext.begin();
-        shader.begin(cam, renderContext);
-        shader.render(renderable);
-        shader.end();
+        ship.begin(cam, renderContext);
+        ship.render(renderable);
+        ship.end();
         renderContext.end();
     }
 
     @Override
     public void dispose() {
-        shader.dispose();
+        ship.dispose();
         model.dispose();
     }
 
@@ -92,5 +93,4 @@ public class ShipModelApplication implements ApplicationListener {
     @Override
     public void pause() {
     }
-
 }
