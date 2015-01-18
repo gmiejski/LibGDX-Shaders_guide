@@ -44,10 +44,12 @@ We're not covering everything in here as we don't want to copy knowledge from ot
 
 Here are some links that helped us a lot in understanding this topic, so you should read them too when the time comes:
 
-* https://github.com/libgdx/libgdx/wiki/Shaders - describes what shaders are and responsibilities of vertex and fragment shaders - must read!
-* http://blog.db-in.com/cameras-on-opengl-es-2-x/ - great tutorial explaining matrix operations - must read!
+* [http://blog.xoppa.com](http://web.archive.org/web/20140101003556/http://blog.xoppa.com/?) - a must-read for everyone learning LibGDX. Contains very comprehensible, step-by-step tutorials
+* [https://github.com/libgdx/libgdx/wiki/Shaders](https://github.com/libgdx/libgdx/wiki/Shaders) - describes what shaders are and responsibilities of vertex and fragment shaders - must read!
+* [http://blog.db-in.com/cameras-on-opengl-es-2-x/](http://blog.db-in.com/cameras-on-opengl-es-2-x/) - great tutorial explaining matrix operations - must read!
+* [http://www.learnopengles.com/](http://www.learnopengles.com/) - great source of OpenGL and LibGDX tutorials, especially for Android developers. Provides an explanation of [lighting](http://www.learnopengles.com/android-lesson-two-ambient-and-diffuse-lighting/)  
 
 
 Special thanks
 ----------------------
-Thanks for mateusz-ant for his general help on those tutorials and during our project creation for university course :)
+Thanks to [mateusz-ant](https://github.com/mateusz-ant/) for his general help on those tutorials and during our project creation for university course :)
