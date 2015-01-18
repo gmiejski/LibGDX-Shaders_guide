@@ -24,6 +24,7 @@ public class SimpleTriangles extends ApplicationAdapter {
         shaderProgram = ShaderLoader.createShader("core\\assets\\001_triangles\\simpleTriangles\\vertex.glsl", "core\\assets\\001_triangles\\simpleTriangles\\fragment.glsl");
 
         // now we build our mesh specifying that each vertex will hold 6 parameters, 2 for coordinates X and Y, and 4 specifying its color
+        // the color will be automatically reachable in vertex shader with name "vColor"!!!!
         mesh = new Mesh(true, 60, 6, new VertexAttribute(VertexAttributes.Usage.Position, 2, ShaderProgram.POSITION_ATTRIBUTE),
                 new VertexAttribute(VertexAttributes.Usage.Color, 4, ShaderProgram.COLOR_ATTRIBUTE));
 

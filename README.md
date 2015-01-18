@@ -11,6 +11,14 @@ General things about those tutorials:
 * examples needs gradle to build and launch, as libgdx itself needs it
 * there are 7 parts, each touching different topic
 
+Libgdx-Shaders_project
+----------------------
+
+If you would like to see how our final project looked like, take  a look here:
+
+https://bitbucket.org/gmiejski/libgdx-shaders_project
+
+Simple ship-based game with hitting boxes and flying in 3D space!
 
 Structure
 ----------------------
@@ -32,7 +40,7 @@ grz.miejski@gmail.com
 
 Other sources of knowledge
 ----------------------
-We're not covering everything in here as we don;t want to copy knowledge from other sources.
+We're not covering everything in here as we don't want to copy knowledge from other sources.
 
 Here are some links that helped us a lot in understanding this topic, so you should read them too when the time comes:
 
