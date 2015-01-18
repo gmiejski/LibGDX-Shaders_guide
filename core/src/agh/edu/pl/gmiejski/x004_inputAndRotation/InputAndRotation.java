@@ -21,9 +21,12 @@ import static java.lang.Math.sin;
 import static java.util.stream.Collectors.toList;
 
 /**
- * Created by Grzegorz Miejski on 8/22/2014.
+ * Here we are joining 2 matrix operations together - rotation and translation on a single triangle
+ * <p>
+ * Use arrows to move the triangle and 'space' to reset its position
  */
 public class InputAndRotation extends ApplicationAdapter {
+    // we set starting rotation speed
     private static final double ROT_SPEED = 0.01f;
 
     private Mesh mesh;
@@ -35,11 +38,12 @@ public class InputAndRotation extends ApplicationAdapter {
     Vector2 leftBot;
     Vector2 rightTop;
 
+    // current rotation value
     private double rot = 0f;
 
     @Override
     public void create() {
-
+        // we create a mesh and shader program as we did many times before
         shaderProgram = ShaderLoader.createShader("core\\assets\\004_inputAndRotation\\vertex.glsl", "core\\assets\\004_inputAndRotation\\fragment.glsl");
         mesh = new Mesh(true, 60, 0, new VertexAttribute(VertexAttributes.Usage.Position, 2, ShaderProgram.POSITION_ATTRIBUTE));
 
@@ -56,9 +60,18 @@ public class InputAndRotation extends ApplicationAdapter {
     public void render() {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        // we change the rotation value on each render phase
         updateRotationAngle();
 
+        // we create translation matrix based on user input (arrows moves the triangle)
         Matrix4 translationMatrix = newTranslationMatrix();
+
+        // next we build a right rotation matrix.
+        // rotation matrixes has to be understand first before we start using them
+        // for a good starting point take a look here:
+        // http://blog.db-in.com/cameras-on-opengl-es-2-x/
+
+        // we have several types of rotation matrixes we can use. Select any of these to see how it changes triangle's movement!
         Matrix4 rotationMatrix;
 //         rotationMatrix = newRotationMatrix_X();
 //         rotationMatrix = newRotationMatrix_Y();
@@ -66,6 +79,8 @@ public class InputAndRotation extends ApplicationAdapter {
         rotationMatrix = newRotationMatrix_XY();
 
         shaderProgram.begin();
+        // We pass separately both matrixes, translation and rotation
+        // Then in vertex shader those 2 are combined. Mind that the order of matrixes composition is important!
         shaderProgram.setUniformMatrix("u_moveMatrix", translationMatrix);
         shaderProgram.setUniformMatrix("u_rotationMatrix", rotationMatrix);
         mesh.render(shaderProgram, GL20.GL_TRIANGLES, 0, 3);
@@ -114,6 +129,7 @@ public class InputAndRotation extends ApplicationAdapter {
 
     private Matrix4 newTranslationMatrix() {
 
+        // first we update translation parameters based on user input
         if (input.isKeyPressed(Keys.UP)) {
             yPos += speed.y;
         } else if (input.isKeyPressed(Keys.DOWN)) {
@@ -124,10 +140,13 @@ public class InputAndRotation extends ApplicationAdapter {
         } else if (input.isKeyPressed(Keys.LEFT)) {
             xPos -= speed.x;
         }
+
+        // space resets triangles position
         if (input.isKeyPressed(Keys.SPACE)) {
             resetTrianglePosition();
         }
 
+        // then we check if we didn't go too far
         if (xPos < (-1 - leftBot.x)) {
             xPos = -1 - leftBot.x;
         } else if (xPos > (1 - rightTop.x)) {
@@ -139,6 +158,7 @@ public class InputAndRotation extends ApplicationAdapter {
             yPos = 1 - rightTop.y;
         }
 
+        // build final translation matrix to be passed to vertex shader
         return new Matrix4(new float[]{
                 1f, 0f, 0f, 0f,
                 0f, 1f, 0f, 0f,
@@ -165,4 +185,8 @@ public class InputAndRotation extends ApplicationAdapter {
         leftBot = new Vector2(left, bot);
         rightTop = new Vector2(right, top);
     }
+
+    // TODO
+    // change rotation matrixes that are being passed to vertex shader
+    // try playing with order of matrix multiplication in vertex shader
 }

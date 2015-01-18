@@ -16,49 +16,56 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import static com.badlogic.gdx.Gdx.input;
 
 /**
- * @author Grzegorz Miejski
- *         on 2014-09-07.
+ * Our Shader program is responsible for drawing itself based on input and shaders program.
+ * Also holds the texture its rendering.
+ * <p>
+ * we implement Shader interface to be able to delegate required actions from main program to ShipShader.
  */
 public class ShipShader implements Shader {
 
     private ShaderProgram program;
-    private Camera camera;
-    private RenderContext renderContext;
     private Texture texture;
-
     private float xPos, yPos;
     private Vector2 speed = new Vector2(0.1f, 0.1f);
 
-
     @Override
     public void init() {
+        // load shaders and compile them to ShaderProgram
         String vert = Gdx.files.internal("core\\assets\\006_model\\vertex.glsl").readString();
         String frag = Gdx.files.internal("core\\assets\\006_model\\fragment.glsl").readString();
         program = new ShaderProgram(vert, frag);
         if (!program.isCompiled())
             throw new GdxRuntimeException(program.getLog());
 
+        // load texture - which is our ship's .png file
         texture = new Texture("core\\assets\\006_model\\data\\ship.png");
     }
 
     @Override
     public void render(Renderable renderable) {
+        // we bind our ship's texture to shader program
         bindTexture();
-
         program.setUniformMatrix("u_worldTrans", renderable.worldTransform);
+
+        // then we render our renderable's mesh using our shader program and renderables details
         renderable.mesh.render(program,
                 renderable.primitiveType,
                 renderable.meshPartOffset,
                 renderable.meshPartSize);
     }
 
+
     @Override
     public void begin(Camera camera, RenderContext context) {
-        this.camera = camera;
-        this.renderContext = context;
+        // this method is called from between context.begin() and .end()
+        // we begin to draw our shader program associated with our ship
         program.begin();
+
+        // we set our projection matrix from camera passed from main app and the translation matrix - based on user input
         program.setUniformMatrix("u_projViewTrans", camera.combined);
         program.setUniformMatrix("u_moveMatrix", newTranslationMatrix());
+
+        // set depth and cull face for proper rendering
         context.setDepthTest(GL20.GL_LEQUAL);
         context.setCullFace(GL20.GL_BACK);
     }
@@ -84,8 +91,12 @@ public class ShipShader implements Shader {
     }
 
     private void bindTexture() {
+        // before rendering we need to bind a texture to fragment shader, in order to fill our model with it's proper parts
+        // we set the active texture as the one with index 0
         Gdx.graphics.getGL20().glActiveTexture(GL20.GL_TEXTURE0);
+        // we bind our texture on 0 index
         texture.bind(0);
+        // we pass it to our shader vertex program and later to fragment shader by name "u_texture"
         program.setUniformi("u_texture", 0);
     }
 

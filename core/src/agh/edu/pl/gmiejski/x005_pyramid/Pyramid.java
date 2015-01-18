@@ -17,7 +17,10 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
 /**
- * Created by Grzegorz Miejski on 8/25/2014.
+ * Here we will construct our first 3D object - a multicolor pyramid made of triangles only!
+ * Topic : cull facing
+ * <p>
+ * Use arrows to see the pyramid from different angles
  */
 public class Pyramid extends ApplicationAdapter {
 
@@ -35,10 +38,13 @@ public class Pyramid extends ApplicationAdapter {
     public void create() {
 
         shaderProgram = ShaderLoader.createShader("core\\assets\\005_pyramid\\vertex.glsl", "core\\assets\\005_pyramid\\fragment.glsl");
+        // we create a space for vertexes each holding 3 coordinations (X, Y and Z) and 3 values for color (RGB)
         mesh = new Mesh(true, 60, 0,
                 new VertexAttribute(VertexAttributes.Usage.Position, 3, ShaderProgram.POSITION_ATTRIBUTE),
                 new VertexAttribute(VertexAttributes.Usage.Color, 3, ShaderProgram.COLOR_ATTRIBUTE));
 
+        // then we create vectors which holds vertexes positions
+        // for 4 sides of pyramid we need only 2 vertexes coordinates, and the PYRAMID_TOP will serve as the third one
         Vector3 v1_1 = new Vector3(-EDGE_SIZE, 0, EDGE_SIZE);
         Vector3 v1_2 = new Vector3(EDGE_SIZE, 0, EDGE_SIZE);
 
@@ -51,6 +57,7 @@ public class Pyramid extends ApplicationAdapter {
         Vector3 v4_1 = new Vector3(EDGE_SIZE, 0, EDGE_SIZE);
         Vector3 v4_2 = new Vector3(EDGE_SIZE, 0, -EDGE_SIZE);
 
+        // for triangles creating bottom of pyramid we need to specify all 3 vertexes
         Vector3 v5_1 = new Vector3(-EDGE_SIZE, 0, EDGE_SIZE);
         Vector3 v5_2 = new Vector3(-EDGE_SIZE, 0, -EDGE_SIZE);
         Vector3 v5_3 = new Vector3(EDGE_SIZE, 0, -EDGE_SIZE);
@@ -59,6 +66,11 @@ public class Pyramid extends ApplicationAdapter {
         Vector3 v6_2 = new Vector3(EDGE_SIZE, 0, -EDGE_SIZE);
         Vector3 v6_3 = new Vector3(EDGE_SIZE, 0, EDGE_SIZE);
 
+        // then we put our vertices to the mesh. Each made fro 6 values.
+        // take a notice that when creating 3D object, there is a difference in drawing triangle in order A,B,C vertexes,
+        // and building it from B,A,C, even though same vertices are taken
+        // Each triangle have a front side and back side - read more about it - face culling:
+        // https://www.opengl.org/wiki/Face_Culling
         mesh.setVertices(new float[]{
                 v5_1.x, v5_1.y, v5_1.z, 0.3f, 0.3f, 0.3f,
                 v5_2.x, v5_2.y, v5_2.z, 0.3f, 0.3f, 0.3f,
@@ -83,9 +95,14 @@ public class Pyramid extends ApplicationAdapter {
     @Override
     public void render() {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        // we enable the cull facing
         Gdx.gl.glEnable(GL20.GL_CULL_FACE);
+        // we set it to back side
         Gdx.gl.glCullFace(GL20.GL_BACK);
+        // we always create triangles counter clock-wise
         Gdx.gl.glFrontFace(GL20.GL_CCW);
+
+        // we update rotation based on user input
         updateRotationAngle();
 
         Matrix4 rotationMatrix;
@@ -152,4 +169,7 @@ public class Pyramid extends ApplicationAdapter {
         xRot = 0;
         yRot = 0;
     }
+
+    // TODO
+    // change the order of vertices put into the mesh ( from A,B,C coordinates, to B,A,C for example). See what happens then.
 }

@@ -44,8 +44,8 @@ We're not covering everything in here as we don't want to copy knowledge from ot
 
 Here are some links that helped us a lot in understanding this topic, so you should read them too when the time comes:
 
+* https://github.com/libgdx/libgdx/wiki/Shaders - describes what shaders are and responsibilities of vertex and fragment shaders - must read!
 * http://blog.db-in.com/cameras-on-opengl-es-2-x/ - great tutorial explaining matrix operations - must read!
-
 
 
 Special thanks
