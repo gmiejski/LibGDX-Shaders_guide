@@ -2,10 +2,12 @@
 precision mediump float;
 #endif
 
-varying vec4 vColor;
-
 void main() {
-    float distanceFactor =sqrt(gl_FragCoord.x*gl_FragCoord.x +gl_FragCoord.y*gl_FragCoord.y) ;//distance(gl_FragCoord, vec2(250.0f,250.0f))/(250.0f*sqrt(2));
-    vec3 color = vec3(distanceFactor);
-    gl_FragColor = vec4(color, 1.0f);
+    // compute Euclidean distance between 0 point (left bottom corner of screen) and fragment coordinates
+    float distanceFactor = sqrt(gl_FragCoord.x * gl_FragCoord.x + gl_FragCoord.y * gl_FragCoord.y);
+
+    // compute fragment color basing on distance between fragment and left bottom corner of the screen
+    // fragment rendered closer to left bottom corner of the screen is darker
+    vec3 color = vec3(distanceFactor / 512);
+    gl_FragColor = vec4(color, 1.0);
 }

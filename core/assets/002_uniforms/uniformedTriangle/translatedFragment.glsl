@@ -2,8 +2,8 @@
 precision mediump float;
 #endif
 
+// color (set in vertex shader)
 varying vec4 vColor;
-uniform float u_scale;
 
 void main() {
     gl_FragColor = vColor;

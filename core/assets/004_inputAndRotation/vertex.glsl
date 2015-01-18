@@ -1,13 +1,12 @@
+// a_position is a default name for position attribute (set programatically as ShaderProgram.POSITION_ATTRIBUTE in java code)
 attribute vec2 a_position;
-attribute vec3 a_color;
 
+// rotation matrix (set programatically in java code)
 uniform mat4 u_rotationMatrix;
+// move matrix (set programatically in java code)
 uniform mat4 u_moveMatrix;
 
-varying vec4 vColor;
-
 void main() {
-    vColor = vec4(1.0f);
-    //gl_Position =   u_rotationMatrix * u_moveMatrix  * vec4(a_position.xy, 0.0, 1.0); // first translates, then rotates - will rotate relative to axis
-    gl_Position =   u_moveMatrix * u_rotationMatrix  * vec4(a_position.xy, 0.0, 1.0); // first rotates then translates - will always rotate relative to triangle edge
+    // first rotate vertex then translate it - will always rotate relative to triangle edge
+    gl_Position = u_moveMatrix * u_rotationMatrix * vec4(a_position, 0.0, 1.0);
 }

@@ -2,8 +2,9 @@
 precision mediump float;
 #endif
 
-varying vec4 vColor;
+// color (set programatically in java code)
+uniform vec4 u_colorFlash;
 
 void main() {
-    gl_FragColor = vColor;
+    gl_FragColor = u_colorFlash;
 }
